@@ -33,8 +33,8 @@ def get_answers(driver,allHz, allVert,date):
 
     #driver.get("https://nytcrosswordanswers.org/nyt-crossword-answers-09-04-21/")
     driver.get("https://nytcrosswordanswers.org/nyt-crossword-answers-" + date + "/")
-    horizontal = driver.find_element(By.XPATH, '//*[@id="post-126612"]/div/div/div[2]/ul[1]')
-    vertical = driver.find_element(By.XPATH, '//*[@id="post-126612"]/div/div/div[2]/ul[2]')
+    horizontal = driver.find_element(By.XPATH, '/html/body/div/div/div/div[1]/main/article/div/div/div[2]/ul[1]')
+    vertical = driver.find_element(By.XPATH, '/html/body/div/div/div/div[1]/main/article/div/div/div[2]/ul[2]')
     hz = horizontal.text.split("\n") # split data
     vert = vertical.text.split("\n")
     key = 0
