@@ -54,12 +54,12 @@ app = flask.Flask(__name__)
 app.config["DEBUG"] = True
 
 
-@app.route('/', methods=['GET'])
-def home():
+@app.route('/get-answers/<date>', methods=['GET'])
+def home(date):
     allHz = {}
     allV = {}
-    driver = setup_user()
-    get_answers(driver,allHz, allV, "09-04-21")
+    driver = setup_user(True)
+    get_answers(driver,allHz, allV, date)
     return [allHz,allV]
 
 app.run()
