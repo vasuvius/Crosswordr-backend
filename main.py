@@ -4,18 +4,7 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
 from fake_useragent import UserAgent
-import json
-app = FastAPI()
-
-
-@app.get("/crossword-answers")
-def getAnswers(date):
-  driver = setup_user()
-  allHz = {}
-  allVert={}
-  get_answers(driver, allHz, allVert, date)
-  return {allHz, allVert} 
-
+import flask;
 
 def setup_user(headless=None, ip=None,port=None ):
     #headless = boolean, headless or not
@@ -60,3 +49,17 @@ def get_answers(driver,allHz, allVert,date):
         allVert[vert[key]] = vert[value]
         key +=2
         value+=2
+
+app = flask.Flask(__name__)
+app.config["DEBUG"] = True
+
+
+@app.route('/', methods=['GET'])
+def home():
+    allHz = {}
+    allV = {}
+    driver = setup_user()
+    get_answers(driver,allHz, allV, "09-04-21")
+    return [allHz,allV]
+
+app.run()
