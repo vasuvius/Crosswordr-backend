@@ -1,8 +1,7 @@
-from fastapi import FastAPI
 from selenium import webdriver
-
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
+from unidecode import unidecode
 from fake_useragent import UserAgent
 import flask;
 
@@ -40,19 +39,25 @@ def get_answers(driver,allHz, allVert,date):
     key = 0
     value = 1
     for i in range(len(hz)//2):
-        allHz[hz[key]] = hz[value]
+        k = process(hz[key])
+        v = process(hz[value])
+        allHz[k] = v
         key +=2
         value+=2
     key=0
     value=1
     for i in range(len(vert)//2):
-        allVert[vert[key]] = vert[value]
+        k = process(vert[key])
+        v = process(vert[value])
+        allVert[k] = v
         key +=2
         value+=2
 
+def process(toProcess):
+    return unidecode(toProcess)
+
 app = flask.Flask(__name__)
 app.config["DEBUG"] = True
-
 
 @app.route('/get-answers/<date>', methods=['GET'])
 def home(date):
