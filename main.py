@@ -29,7 +29,7 @@ def get_answers(driver,allHz, allVert,date):
     #allHz = dictionary
     #allVert = dictionary
     #date = date in MM-DD-YY format
-
+    #9-13 and onword includes numbers in the question
     #driver.get("https://nytcrosswordanswers.org/nyt-crossword-answers-09-04-21/")
     driver.get("https://nytcrosswordanswers.org/nyt-crossword-answers-" + date + "/")
     horizontal = driver.find_element(By.XPATH, '/html/body/div/div/div/div[1]/main/article/div/div/div[2]/ul[1]')
