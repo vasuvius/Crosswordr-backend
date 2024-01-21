@@ -1,6 +1,7 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.chrome.service import Service
 from unidecode import unidecode
 from fake_useragent import UserAgent
 import flask;
@@ -21,7 +22,7 @@ def setup_user(headless=None, ip=None,port=None ):
         print(PROXY)
         options.add_argument("--proxy-server=%s" % PROXY) 
     #options.add_argument(f'user-agent={user_agent}')
-    driver = webdriver.Chrome(options=options, )
+    driver = webdriver.Chrome(service=Service(), options=options)
     return driver
 
 def get_answers(driver,allHz, allVert,date):
