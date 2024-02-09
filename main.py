@@ -5,7 +5,7 @@ from selenium.webdriver.chrome.service import Service
 from unidecode import unidecode
 from fake_useragent import UserAgent
 import flask;
-from flask_cors import CORS
+from flask_cors import CORS, cross_origin
 
 def setup_user(headless=None, ip=None,port=None ):
     #headless = boolean, headless or not
@@ -65,6 +65,7 @@ cors = CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
 
 @app.route('/get-answers/<date>', methods=['GET'])
+@cross_origin()
 def home(date):
     allHz = {}
     allV = {}
