@@ -93,6 +93,26 @@ def get_completion(prompt):
         return "Error in OpenAI call. Please Try again in a few minutes"
 
 
+def get_completion(prompt):
+    # validation for prompt: 
+    client = OpenAI(
+        # This is the default and can be omitted
+        api_key=os.environ.get("OPENAI_API_KEY"),
+    )
+    content = "Can you respond with a New York Times style crossword queston for the crossword answer: " + prompt + ". Please do NOT use the answer in the question. Make the question easy to understand. Include the number of letters in the answer. Do NOT include the word 'clue' "
+    chat_completion = client.chat.completions.create(
+        messages=[
+            {
+                "role": "user",
+                "content": content,
+            }
+        ],
+        model="gpt-4",
+    )
+    response_message = chat_completion.choices[0].message.content
+    return response_message
+
+
 def process(toProcess):
     return unidecode(toProcess)
 
