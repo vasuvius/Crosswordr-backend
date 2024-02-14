@@ -6,6 +6,8 @@ from unidecode import unidecode
 from fake_useragent import UserAgent
 import flask;
 from flask_cors import CORS, cross_origin
+import os
+from openai import OpenAI
 
 def setup_user(headless=None, ip=None,port=None ):
     #headless = boolean, headless or not
@@ -55,6 +57,26 @@ def get_answers(driver,allHz, allVert,date):
         key +=2
         value+=2
 
+def get_completion(prompt):
+    # validation for prompt: 
+    client = OpenAI(
+        # This is the default and can be omitted
+        api_key=os.environ.get("OPENAI_API_KEY"),
+    )
+    content = "Can you respond with a New York Times style crossword queston for the crossword answer: " + prompt + ". Please do NOT use the answer in the question. Make the question easy to understand. Include the number of letters in the answer. Do NOT include the word 'clue' "
+    chat_completion = client.chat.completions.create(
+        messages=[
+            {
+                "role": "user",
+                "content": content,
+            }
+        ],
+        model="gpt-4",
+    )
+    response_message = chat_completion.choices[0].message.content
+    return response_message
+
+
 def process(toProcess):
     return unidecode(toProcess)
 
@@ -72,5 +94,10 @@ def home(date):
     driver = setup_user(True)
     get_answers(driver,allHz, allV, date)
     return [allHz,allV]
+
+@app.route('/get-openAI/<answer>', methods=['GET'])
+@cross_origin()
+def openAi(answer):
+    return get_completion(answer)
 
 app.run()
