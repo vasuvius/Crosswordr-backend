@@ -15,6 +15,8 @@ def setup_user(headless=None, ip=None,port=None ):
     #port = port
     #RETURNS a setup driver
     options = Options()
+    options.add_argument("--no-sandbox")
+    options.add_argument("--dsiable-dev-shm-usage")
     ua = UserAgent()
     user_agent = ua.random
     print(user_agent)
@@ -100,4 +102,6 @@ def home(date):
 def openAi(answer):
     return get_completion(answer)
 
-app.run()
+if __name__=="__main__":
+    app.run(debug=True, port=5000)
+
