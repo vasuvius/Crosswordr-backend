@@ -65,7 +65,7 @@ def get_completion(prompt):
         # This is the default and can be omitted
         api_key=os.environ.get("OPENAI_API_KEY"),
     )
-    content = "Can you respond with a New York Times style crossword queston for the crossword answer: " + prompt + ". Please do NOT use the answer in the question. Make the question easy to understand. Include the number of letters in the answer. Do NOT include the word 'clue' "
+    content = os.environ.get("PROMPT")%(prompt)
     chat_completion = client.chat.completions.create(
         messages=[
             {
