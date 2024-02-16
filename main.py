@@ -46,6 +46,8 @@ def get_answers(driver,allHz, allVert,date):
         driver.get("https://nytcrosswordanswers.org/nyt-crossword-answers-" + date + "/")
         horizontal = driver.find_element(By.XPATH, '/html/body/div/div/div/div[1]/main/article/div/div/div[2]/ul[1]')
         vertical = driver.find_element(By.XPATH, '/html/body/div/div/div/div[1]/main/article/div/div/div[2]/ul[2]')
+        #process the number as well! may be null for some use cases
+        # number = driver.find_element(By.XPATH, '/html/body/div/div/div/div[1]/main/article/div/div/div[2]/ul[2]')
         hz = horizontal.text.split("\n") # split data
         vert = vertical.text.split("\n")
         key = 0
@@ -53,7 +55,7 @@ def get_answers(driver,allHz, allVert,date):
         for i in range(len(hz)//2):
             k = process(hz[key])
             v = process(hz[value])
-            allHz[k] = v
+            allHz.append(["0", k, v])
             key +=2
             value+=2
         key=0
@@ -61,7 +63,7 @@ def get_answers(driver,allHz, allVert,date):
         for i in range(len(vert)//2):
             k = process(vert[key])
             v = process(vert[value])
-            allVert[k] = v
+            allVert.append(["0", k, v])
             key +=2
             value+=2
     except Exception as e:
@@ -103,8 +105,8 @@ app.config['CORS_HEADERS'] = 'Content-Type'
 @app.route('/get-answers/<date>', methods=['GET'])
 @cross_origin()
 def home(date):
-    allHz = {}
-    allV = {}
+    allHz = []
+    allV = []
     driver = setup_user(True)
     if driver == None:
         return [allHz, allV]
