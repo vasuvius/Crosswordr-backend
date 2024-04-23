@@ -87,7 +87,7 @@ def get_completion(prompt):
             model="gpt-4",
         )
         response_message = chat_completion.choices[0].message.content
-        return response_message
+        return [response_message]
     except Exception as e:
         print("Error with OpenAI call: ", e)
         return "Error in OpenAI call. Please Try again in a few minutes"
