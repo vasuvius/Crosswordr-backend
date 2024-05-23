@@ -100,7 +100,7 @@ app = flask.Flask(__name__)
 app.config["DEBUG"] = True
 
 cors = CORS(app)
-app.config['CORS_HEADERS'] = 'Content-Type'
+app.config['CORS_HEADERS'] = 'Content-Type' 
 
 @app.route('/get-answers/<date>', methods=['GET'])
 @cross_origin()
