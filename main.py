@@ -103,7 +103,7 @@ cors = CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
 
 @app.route('/get-answers/<date>', methods=['GET'])
-@cross_origin()
+@cross_origin() 
 def home(date):
     allHz = []
     allV = []
